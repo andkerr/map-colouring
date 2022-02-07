@@ -1,65 +1,80 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node {
+typedef struct Node {
     int data;
-    struct node* next;
-} node;
+    struct Node* next;
+} Node;
 
-void insert_nodes(node* root, const int n);
+typedef struct List {
+    Node* first;
+} List;
 
-void delete_nodes(node* root);
+void insert(List* list, const int val);
 
-void print_list(node* const root);
+void clear_all(List* list);
 
-void reverse_list(node* root);
+void print(List* list);
+
+void reverse(List* list);
 
 int main(void) {
-    node* root = NULL;
+    List my_list = {NULL};
 
-    insert_nodes(root, 5);
+    for (int i = 0; i < 5; ++i) {
+        insert(&my_list, i);
+    }
 
-    print_list(root);
+    print(&my_list);
 
-    delete_nodes(root);
+    reverse(&my_list);
 
+    printf("\n");
+    print(&my_list);
+
+    clear_all(&my_list);
+
+    if (my_list.first == NULL) {
+        printf("all clear\n");
+    }
     return 0;
 }
 
-void insert_nodes(node* root, const int n) {
-    for (int i = 0; i < n; ++i) {
-        printf("creating new node\n");
-        node* new_node = malloc(sizeof(node));
-        new_node->data = i;
-        new_node->next = root;
-        root = new_node;
-        printf("%d\n", root->data);
+void insert(List* list, const int val) {
+    if (list->first == NULL) {
+        list->first = malloc(sizeof(Node));
+        list->first->data = val;
+        list->first->next = NULL;
     }
-    return;
+    else {
+        Node* new_node = malloc(sizeof(Node));
+        new_node->data = val;
+        new_node->next = list->first;
+        list->first = new_node;
+    }
 }
 
-void delete_nodes(node* root) {
-    while (root != NULL) {
-        node* to_delete = root;
-        root = root->next;
+void clear_all(List* list) {
+    while (list->first != NULL) {
+        Node* to_delete = list->first;
+        list->first = list->first->next;
         free(to_delete);
     }
-    free(root);
-    return;
 }
 
-void print_list(node* const root) {
-    if (root == NULL) {
-        printf("Your list is empty, returning...\n");
-        return;
-    }
-
-    for (node* np = root; np != NULL; np = np->next) {
+void print(List* list) {
+    for (Node* np = list->first; np != NULL; np = np->next) {
         printf("%d\n", np->data);
     }
-    printf("done\n");
-    return;
 }
 
-void reverse_list(node* root) {
+void reverse(List* list) {
+    Node* prev = NULL;
+    while (list->first->next != NULL) {
+        Node* temp = list->first->next;
+        list->first->next = prev;
+        prev = list->first;
+        list->first = temp;
+    }
+    list->first->next = prev;
 }
