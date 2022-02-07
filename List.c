@@ -69,6 +69,10 @@ void print(List* list) {
 }
 
 void reverse(List* list) {
+    if (list->first == NULL) {
+        return;
+    }
+
     Node* prev = NULL;
     while (list->first->next != NULL) {
         Node* temp = list->first->next;
