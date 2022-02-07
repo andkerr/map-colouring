@@ -33,7 +33,9 @@ void insert_nodes(node* root, const int n) {
         new_node->data = i;
         new_node->next = root;
         root = new_node;
+        printf("%d\n", root->data);
     }
+    return;
 }
 
 void delete_nodes(node* root) {
@@ -43,15 +45,21 @@ void delete_nodes(node* root) {
         free(to_delete);
     }
     free(root);
+    return;
 }
 
 void print_list(node* const root) {
+    if (root == NULL) {
+        printf("Your list is empty, returning...\n");
+        return;
+    }
+
     for (node* np = root; np != NULL; np = np->next) {
         printf("%d\n", np->data);
     }
     printf("done\n");
+    return;
 }
 
 void reverse_list(node* root) {
-
 }
