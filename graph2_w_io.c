@@ -26,7 +26,7 @@ void destroy_graph(Node* graph);
 void destroy_edges(Node* n);
 
 int main(void) {
-    FILE* fin = fopen("3states.in", "r");
+    FILE* fin = fopen("states.in", "r");
     if (!fin) {
         printf("error opening 3states.in\n");
         return -1;
