@@ -3,7 +3,7 @@
 #include "stdlib.h"
 #include "string.h"
 
-const int MAX_REGIONS = 65536;
+const int MAX_REGIONS = 65536; // maximum value of an unsigned short int
 
 typedef struct Node Node;
 struct Node {
