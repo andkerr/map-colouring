@@ -28,6 +28,8 @@ void apply(ListNode *head, void (*fn)(ListNode *, void *), void *arg);
 void print_ListNode(ListNode *nptr, void *arg);
 void get_neighbour_cols(ListNode *nptr, void *arg);
 
+// For representing an arbitrary map region that
+// can be inserted into an ordered map.
 typedef struct BSTNode BSTNode;
 struct BSTNode {
   char *name;
@@ -50,9 +52,12 @@ void apply_inorder(BSTNode *root,
 void print_BSTNode(BSTNode *nptr, void *arg);
 void assign_colour(BSTNode *nptr, void *arg);
 
+// Global ordered map object. In the future, it may be smart to update
+// function signatures that act on the map to accept it as a parameter,
+// instead of requiring that they access the global object directly.
+BSTNode *map = NULL;
 int init_map(BSTNode **map, char *fname);
 void colour(BSTNode *map);
-BSTNode *map = NULL;
 
 int main(void) {
   if (init_map(&map, "usa_edges.in") != 0) {
