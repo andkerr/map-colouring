@@ -57,6 +57,7 @@ int main() {
         }
     }
 
+#ifdef DEBUG
     printf("node | neighbours\n"
            "-----------------\n");
     for (size_t i = 0; i < nNodes; ++i) {
@@ -68,14 +69,22 @@ int main() {
     }
     
     printf("\ncomputing the answer to life, the universe, and everything...\n");
+#endif
+
     assignColours(g, neighbourCounts, colours, nNodes);
 
+#ifdef DEBUG
     printf("\n");
     printf("node | colour\n"
            "-----------------\n");
     for (size_t i = 0; i < nNodes; ++i) {
         printf("  %zu  | %s\n", i, COLOUR_STR[colours[i]]);
     }
+#else
+    for (size_t i = 0; i < nNodes; ++i) {
+        printf("%zu %d\n", i, colours[i]);
+    }
+#endif
 
     return(0);
 }
