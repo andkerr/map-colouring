@@ -31,13 +31,12 @@ void assign_colours(int g[MAXNODES][MAXNODES],
                     int nNodes);
 
 int main() {
-
     int g[MAXNODES][MAXNODES];
     int n_neighbours[MAXNODES];
     int colours[MAXNODES];
     int nNodes = 0;
 
-    for (size_t i = 0; i < MAXNODES; ++i) {
+    for (int i = 0; i < MAXNODES; ++i) {
         colours[i] = NONE;
         n_neighbours[i] = 0;
     }
@@ -60,9 +59,9 @@ int main() {
 #ifdef DEBUG
     printf("node | neighbours\n"
            "-----------------\n");
-    for (size_t i = 0; i < nNodes; ++i) {
-        printf("  %zu  | ", i);
-        for (size_t j = 0; j < n_neighbours[i]; ++j) {
+    for (int i = 0; i < nNodes; ++i) {
+        printf("  %d  | ", i);
+        for (int j = 0; j < n_neighbours[i]; ++j) {
             printf("%d ", g[i][j]);
         }
         printf("\n");
@@ -77,12 +76,12 @@ int main() {
     printf("\n");
     printf("node | colour\n"
            "-----------------\n");
-    for (size_t i = 0; i < nNodes; ++i) {
-        printf("  %zu  | %s\n", i, COLOUR_STR[colours[i]]);
+    for (int i = 0; i < nNodes; ++i) {
+        printf("  %d  | %s\n", i, COLOUR_STR[colours[i]]);
     }
 #else
-    for (size_t i = 0; i < nNodes; ++i) {
-        printf("%zu %d\n", i, colours[i]);
+    for (int i = 0; i < nNodes; ++i) {
+        printf("%d %d\n", i, colours[i]);
     }
 #endif
 
@@ -134,7 +133,7 @@ void assign_colours(int g[MAXNODES][MAXNODES],
     queue_init(sptr);
 
     int discovered[nNodes]; /* assume nodes are numbered [0, n) */
-    for (size_t i = 0; i < nNodes; ++i) {
+    for (int i = 0; i < nNodes; ++i) {
         discovered[i] = 0;
     }
 
@@ -148,7 +147,7 @@ void assign_colours(int g[MAXNODES][MAXNODES],
         queue_pop(sptr);
 
         red = green = blue = yellow = 1;
-        for (size_t i = 0; i < n_neighbours[current]; ++i) {
+        for (int i = 0; i < n_neighbours[current]; ++i) {
             neighbour = g[current][i];
             switch (colours[neighbour]) {
                 case RED:
