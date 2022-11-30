@@ -17,42 +17,42 @@ typedef struct Queue {
     int data[MAXNODES];
     size_t front;
     size_t back;
-} Queue;
+} queue_t;
 
-void defaultInit(Queue *qptr);
-void push_back(Queue *qptr, int elt);
-void pop_front(Queue *qptr);
-int top(Queue *qptr);
-int empty(Queue *qptr);
+void queue_init(queue_t *qptr);
+void queue_push(queue_t *qptr, int elt);
+void queue_pop(queue_t *qptr);
+int queue_top(queue_t *qptr);
+int queue_empty(queue_t *qptr);
 
-void assignColours(int g[MAXNODES][MAXNODES],
-                   int neighbourCounts[MAXNODES],
-                   int colours[MAXNODES],
-                   int nNodes);
+void assign_colours(int g[MAXNODES][MAXNODES],
+                    int n_neighbours[MAXNODES],
+                    int colours[MAXNODES],
+                    int nNodes);
 
 int main() {
 
     int g[MAXNODES][MAXNODES];
-    int neighbourCounts[MAXNODES];
+    int n_neighbours[MAXNODES];
     int colours[MAXNODES];
     int nNodes = 0;
 
     for (size_t i = 0; i < MAXNODES; ++i) {
         colours[i] = NONE;
-        neighbourCounts[i] = 0;
+        n_neighbours[i] = 0;
     }
 
     int u, v;
     while(scanf("%d %d\n", &u, &v) == 2) {
-        g[u][neighbourCounts[u]] = v;
-        ++neighbourCounts[u];
-        if (neighbourCounts[u] == 1) {
+        g[u][n_neighbours[u]] = v;
+        ++n_neighbours[u];
+        if (n_neighbours[u] == 1) {
             ++nNodes;
         }
 
-        g[v][neighbourCounts[v]] = u;
-        ++neighbourCounts[v];
-        if (neighbourCounts[v] == 1) {
+        g[v][n_neighbours[v]] = u;
+        ++n_neighbours[v];
+        if (n_neighbours[v] == 1) {
             ++nNodes;
         }
     }
@@ -62,7 +62,7 @@ int main() {
            "-----------------\n");
     for (size_t i = 0; i < nNodes; ++i) {
         printf("  %zu  | ", i);
-        for (size_t j = 0; j < neighbourCounts[i]; ++j) {
+        for (size_t j = 0; j < n_neighbours[i]; ++j) {
             printf("%d ", g[i][j]);
         }
         printf("\n");
@@ -71,7 +71,7 @@ int main() {
     printf("\ncomputing the answer to life, the universe, and everything...\n");
 #endif
 
-    assignColours(g, neighbourCounts, colours, nNodes);
+    assign_colours(g, n_neighbours, colours, nNodes);
 
 #ifdef DEBUG
     printf("\n");
@@ -89,12 +89,12 @@ int main() {
     return(0);
 }
 
-void defaultInit(Queue *qptr) {
+void queue_init(queue_t *qptr) {
     qptr->front = 0;
     qptr->back = 0;
 }
 
-void push_back(Queue *qptr, int elt) {
+void queue_push(queue_t *qptr, int elt) {
     if ((qptr->back + 1) % MAXNODES == qptr->front) {
         printf("error: Queue full\n");
         exit(1);
@@ -103,8 +103,8 @@ void push_back(Queue *qptr, int elt) {
     qptr->back = (qptr->back + 1) % MAXNODES;
 }
 
-void pop_front(Queue *qptr) {
-    if (empty(qptr)) {
+void queue_pop(queue_t *qptr) {
+    if (queue_empty(qptr)) {
         printf("error: Queue empty\n");
         exit(1);
     }
@@ -112,8 +112,8 @@ void pop_front(Queue *qptr) {
     qptr->front = (qptr->front + 1) % MAXNODES;
 }
 
-int top(Queue *qptr) {
-    if(empty(qptr)) {
+int top(queue_t *qptr) {
+    if(queue_empty(qptr)) {
         printf("error: Queue empty\n");
         exit(1);
     }
@@ -121,34 +121,34 @@ int top(Queue *qptr) {
     return qptr->data[qptr->front];
 }
 
-int empty(Queue *qptr) {
+int queue_empty(queue_t *qptr) {
     return qptr->front == qptr->back;
 }
 
-void assignColours(int g[MAXNODES][MAXNODES],
-                   int neighbourCounts[MAXNODES],
+void assign_colours(int g[MAXNODES][MAXNODES],
+                   int n_neighbours[MAXNODES],
                    int colours[],
                    int nNodes) {
-    Queue search;
-    Queue *sptr = &search;
-    defaultInit(sptr);
+    queue_t search;
+    queue_t *sptr = &search;
+    queue_init(sptr);
 
     int discovered[nNodes]; /* assume nodes are numbered [0, n) */
     for (size_t i = 0; i < nNodes; ++i) {
         discovered[i] = 0;
     }
 
-    push_back(sptr, 0); /* first node */
+    queue_push(sptr, 0); /* first node */
     discovered[0] = 1;
 
     int current, neighbour;
     int red, green, blue, yellow;
-    while (!empty(sptr)) {
+    while (!queue_empty(sptr)) {
         current = top(sptr);
-        pop_front(sptr);
+        queue_pop(sptr);
 
         red = green = blue = yellow = 1;
-        for (size_t i = 0; i < neighbourCounts[current]; ++i) {
+        for (size_t i = 0; i < n_neighbours[current]; ++i) {
             neighbour = g[current][i];
             switch (colours[neighbour]) {
                 case RED:
@@ -166,7 +166,7 @@ void assignColours(int g[MAXNODES][MAXNODES],
             }
             
             if (!discovered[neighbour]) {
-                push_back(sptr, neighbour);
+                queue_push(sptr, neighbour);
                 discovered[neighbour] = 1;
             }
         }
