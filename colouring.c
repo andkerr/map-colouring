@@ -183,7 +183,7 @@ void assign_colours(int g[MAXNODES][MAXNODES],
             colours[current] = YELLOW;
         }
         else {
-            printf("error: unable to assign a valid 4-colouring. Is your graph pplanar?\n");
+            printf("error: unable to assign a valid 4-colouring. Is your graph planar?\n");
             exit(1);
         }
     }
