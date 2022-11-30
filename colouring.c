@@ -111,7 +111,7 @@ void queue_pop(queue_t *qptr) {
     qptr->front = (qptr->front + 1) % MAXNODES;
 }
 
-int top(queue_t *qptr) {
+int queue_top(queue_t *qptr) {
     if(queue_empty(qptr)) {
         printf("error: Queue empty\n");
         exit(1);
@@ -143,7 +143,7 @@ void assign_colours(int g[MAXNODES][MAXNODES],
     int current, neighbour;
     int red, green, blue, yellow;
     while (!queue_empty(sptr)) {
-        current = top(sptr);
+        current = queue_top(sptr);
         queue_pop(sptr);
 
         red = green = blue = yellow = 1;
