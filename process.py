@@ -7,7 +7,6 @@ import sys
 def standardize_edge_list(fname):
     node_ids = {}
     n_nodes = 0
-
     edges = []
 
     with open(fname, 'r') as f:
