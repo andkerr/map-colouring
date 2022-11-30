@@ -125,9 +125,9 @@ int queue_empty(queue_t *qptr) {
 }
 
 void assign_colours(int g[MAXNODES][MAXNODES],
-                   int n_neighbours[MAXNODES],
-                   int colours[],
-                   int nNodes) {
+                    int n_neighbours[MAXNODES],
+                    int colours[],
+                    int nNodes) {
     queue_t search;
     queue_t *sptr = &search;
     queue_init(sptr);
