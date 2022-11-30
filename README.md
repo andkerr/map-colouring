@@ -5,3 +5,5 @@ each vertex with an integer directly from STDIN. If you want to work with a
 more descriptive edge list that uses non-integer labels for each vertex, 
 run `processing.py`, which will convert your list to integers-only format and
 pass it to the colouring routine.
+
+NOTE: This routine only works with connected graphs right now.
