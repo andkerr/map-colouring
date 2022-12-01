@@ -10,16 +10,15 @@ def standardize_edge_list(fname):
     edges = []
 
     with open(fname, 'r') as f:
-        for line in f:
-            if line != '\n':
-                (u, v) = line.split()
-                if node_ids.get(u) is None:
-                    node_ids[u] = n_nodes
-                    n_nodes += 1
-                if node_ids.get(v) is None:
-                    node_ids[v] = n_nodes
-                    n_nodes += 1
-                edges.append((node_ids[u], node_ids[v]))
+        for line in f.read().rstrip().split('\n'):
+            (u, v) = line.split()
+            if node_ids.get(u) is None:
+                node_ids[u] = n_nodes
+                n_nodes += 1
+            if node_ids.get(v) is None:
+                node_ids[v] = n_nodes
+                n_nodes += 1
+            edges.append((node_ids[u], node_ids[v]))
 
     return node_ids, edges
 
