@@ -3,6 +3,8 @@
 
 # executable
 colouring
+*.ipynb
+.ipynb_checkpoints/
 
 *.dSYM/
 *.in
