@@ -2,7 +2,7 @@ import subprocess
 import sys
 
 
-# convert a plaintext edge list with arbitrary vertex identiifers to an
+# convert a plaintext edge list with arbitrary vertex identifiers to an
 # edge list containing only integer values
 def standardize_edge_list(fname):
     node_ids = {}
